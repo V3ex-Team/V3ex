@@ -1,0 +1,110 @@
+.container {
+  background-color: rgba(62, 62, 62, 1);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+}
+
+.header {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.icon {
+  aspect-ratio: 1;
+  object-fit: auto;
+  object-position: center;
+  width: 15px;
+}
+
+.content {
+  display: flex;
+  margin-top: 9px;
+  width: 100%;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.rewardSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.rewardInfo {
+  display: flex;
+  /* padding-left: 46px; */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  color: var(--Neutral-White, #fff);
+  font:
+    700 16px Atyp Display TRIAL,
+    -apple-system,
+    Roboto,
+    Helvetica,
+    sans-serif;
+}
+
+.rewardImage {
+  aspect-ratio: 1.41;
+  object-fit: auto;
+  object-position: center;
+  width: 62px;
+  align-self: center;
+  margin: 14px 0;
+}
+
+.divider {
+  background: linear-gradient(0deg, #fff 0%, #fff 100%), #fff;
+  width: 164px;
+  height: 6px;
+}
+
+.checkInButton {
+  display: flex;
+  gap: 0;
+  font-size: 14px;
+  color: var(--Neutral-OffBlack, #131313);
+  font-weight: 600;
+  line-height: 160%;
+}
+
+.buttonSide {
+  background: linear-gradient(0deg, #fff 0%, #fff 100%), #fff;
+  width: 6px;
+}
+
+.buttonText {
+  font-family:
+    Atyp Display TRIAL,
+    -apple-system,
+    Roboto,
+    Helvetica,
+    sans-serif;
+  background-color: #61dfff;
+  justify-content: center;
+  padding: 0px 48px;
+
+  color: var(--Neutral-OffBlack, #131313);
+  font-family: 'Atyp Display TRIAL';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px; /* 22.4px */
+  height: 32px;
+}
+
+.bottomIcon {
+  aspect-ratio: 1;
+  object-fit: auto;
+  object-position: center;
+  width: 15px;
+  align-self: end;
+  margin-top: 133px;
+}

@@ -19,30 +19,22 @@
 
 import React from 'react';
 import { Container } from 'react-bootstrap';
-import { Trans } from 'react-i18next';
 
 import dayjs from 'dayjs';
 
-import { siteInfoStore } from '@/stores';
-
 const Index = () => {
   const fullYear = dayjs().format('YYYY');
-  const siteName = siteInfoStore((state) => state.siteInfo.name);
-  const cc = `${fullYear} ${siteName}`;
   return (
     <footer className="bg-light">
       <Container className="py-3">
         <p className="text-center mb-0 small text-secondary">
-          <Trans i18nKey="footer.build_on" values={{ cc }}>
-            Powered by
-            {/* eslint-disable-next-line react/jsx-no-target-blank */}
-            <a href="https://answer.apache.org" target="_blank">
-              Apache Answer
-            </a>
-            - the open-source software that powers Q&A communities.
-            <br />
-            Made with love. © 2022 Answer.
-          </Trans>
+          Powered by
+          {/* eslint-disable-next-line react/jsx-no-target-blank */}
+          <a href="https://aspecta.id/b/linea-builders-club" target="_blank">
+            {'  Linea'}
+          </a>
+          <br />
+          Made with love. © {fullYear} Linea.
         </p>
       </Container>
     </footer>

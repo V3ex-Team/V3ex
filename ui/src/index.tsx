@@ -24,6 +24,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 
 import './index.scss';
+import { Web3ModalProvider } from './Web3ModalProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -65,6 +66,8 @@ document.addEventListener('load', handleImgLoad, true);
 
 root.render(
   <React.StrictMode>
-    <App />
+    <Web3ModalProvider>
+      <App />
+    </Web3ModalProvider>
   </React.StrictMode>,
 );

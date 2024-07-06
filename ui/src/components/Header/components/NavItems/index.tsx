@@ -20,7 +20,7 @@
 import { FC, memo } from 'react';
 import { Nav, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import type * as Type from '@/common/interface';
 import { Avatar, Icon } from '@/components';
@@ -28,12 +28,13 @@ import { floppyNavigation } from '@/utils';
 import { userCenterStore } from '@/stores';
 
 interface Props {
-  redDot: Type.NotificationStatus | undefined;
+  // eslint-disable-next-line react/no-unused-prop-types
+  redDot?: Type.NotificationStatus | undefined;
   userInfo: Type.UserInfoRes;
   logOut: (e) => void;
 }
 
-const Index: FC<Props> = ({ redDot, userInfo, logOut }) => {
+const Index: FC<Props> = ({ userInfo, logOut }) => {
   const { t } = useTranslation();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigate = useNavigate();
@@ -47,38 +48,6 @@ const Index: FC<Props> = ({ redDot, userInfo, logOut }) => {
   };
   return (
     <>
-      <Nav className="flex-row">
-        <Nav.Link
-          as={NavLink}
-          to="/users/notifications/inbox"
-          title={t('inbox', { keyPrefix: 'notifications' })}
-          className="icon-link d-flex align-items-center justify-content-center p-0 me-3 position-relative">
-          <Icon name="bell-fill" className="fs-4" />
-          {(redDot?.inbox || 0) > 0 && (
-            <div className="unread-dot bg-danger">
-              <span className="visually-hidden">
-                {t('new_alerts', { keyPrefix: 'notifications' })}
-              </span>
-            </div>
-          )}
-        </Nav.Link>
-
-        <Nav.Link
-          as={NavLink}
-          to="/users/notifications/achievement"
-          title={t('achievement', { keyPrefix: 'notifications' })}
-          className="icon-link d-flex align-items-center justify-content-center p-0 me-3 position-relative">
-          <Icon name="trophy-fill" className="fs-4" />
-          {(redDot?.achievement || 0) > 0 && (
-            <div className="unread-dot bg-danger">
-              <span className="visually-hidden">
-                {t('new_alerts', { keyPrefix: 'notifications' })}
-              </span>
-            </div>
-          )}
-        </Nav.Link>
-      </Nav>
-
       <Dropdown align="end">
         <Dropdown.Toggle
           variant="success"

@@ -39,6 +39,7 @@ import * as Type from '@/common/interface';
 import { userCenter, floppyNavigation, Storage } from '@/utils';
 import { QUESTIONS_ORDER_STORAGE_KEY } from '@/common/constants';
 import { QUESTION_ORDER_KEYS } from '@/components/QuestionList';
+import DailyCheckInReward from '@/components/DailyCheckInReward';
 
 const Questions: FC = () => {
   const { t } = useTranslation('translation', { keyPrefix: 'question' });
@@ -80,6 +81,8 @@ const Questions: FC = () => {
         />
       </Col>
       <Col className="page-right-side mt-4 mt-xl-0">
+        <DailyCheckInReward />
+
         <CustomSidebar />
         {!loggedUser.username && (
           <div className="card mb-4">
@@ -107,6 +110,7 @@ const Questions: FC = () => {
             </div>
           </div>
         )}
+
         {loggedUser.access_token && <FollowingTags />}
         <HotQuestions />
       </Col>

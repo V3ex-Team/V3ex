@@ -31,6 +31,7 @@ const routes: RouteNode[] = [];
 
 const routeWrapper = (routeNodes: RouteNode[], root: RouteNode[]) => {
   routeNodes.forEach((rn) => {
+    // rn.guard = undefined;
     if (rn.page === 'pages/Layout') {
       rn.element = rn.guard ? (
         <RouteGuard onEnter={rn.guard} path={rn.path} page={rn.page}>

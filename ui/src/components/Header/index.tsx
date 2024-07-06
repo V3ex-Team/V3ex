@@ -41,16 +41,19 @@ import { userCenter, floppyNavigation } from '@/utils';
 import {
   loggedUserInfoStore,
   siteInfoStore,
-  brandingStore,
+  // brandingStore,
   loginSettingStore,
   themeSettingStore,
   sideNavStore,
 } from '@/stores';
 import { logout, useQueryNotificationStatus } from '@/services';
+import linersWhite from '@/assets/images/White-Liners.png';
+import liners from '@/assets/images/Liners.png';
 
 import NavItems from './components/NavItems';
 
 import './index.scss';
+import ConnectButton from '@/Web3ModalProvider';
 
 const Header: FC = () => {
   const navigate = useNavigate();
@@ -61,7 +64,7 @@ const Header: FC = () => {
   const { t } = useTranslation();
   const [searchStr, setSearch] = useState('');
   const siteInfo = siteInfoStore((state) => state.siteInfo);
-  const brandingInfo = brandingStore((state) => state.branding);
+  // const brandingInfo = brandingStore((state) => state.branding);
   const loginSetting = loginSettingStore((state) => state.login);
   const { updateReview, updateVisible } = sideNavStore();
   const { data: redDot } = useQueryNotificationStatus();
@@ -129,6 +132,7 @@ const Header: FC = () => {
 
   return (
     <Navbar
+      style={{ background: '#131313', borderBottom: '0.5px solid#fff' }}
       variant={navbarStyle === 'theme-colored' ? 'dark' : ''}
       expand="lg"
       className={classnames('sticky-top', navbarStyle)}
@@ -145,33 +149,57 @@ const Header: FC = () => {
 
         <div className="d-flex justify-content-between align-items-center nav-grow flex-nowrap">
           <Navbar.Brand to="/" as={Link} className="lh-1 me-0 me-sm-5 p-0">
-            {brandingInfo.logo ? (
-              <>
+            <>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
                 <img
+                  style={{
+                    width: '97px',
+                    height: '32px',
+                  }}
                   className="d-none d-lg-block logo me-0"
-                  src={brandingInfo.logo}
+                  src={linersWhite}
                   alt={siteInfo.name}
                 />
-
+                <div
+                  className="d-none d-lg-block"
+                  style={{
+                    width: '1px',
+                    height: '30px',
+                    background: '#FFF',
+                    margin: '0 10px',
+                  }}>
+                  {' '}
+                </div>
                 <img
-                  className="lg-none logo me-0"
-                  src={brandingInfo.mobile_logo || brandingInfo.logo}
+                  style={{
+                    width: '57px',
+                    marginTop: 5,
+                  }}
+                  className="d-none d-lg-block logo me-0"
+                  src={liners}
                   alt={siteInfo.name}
                 />
-              </>
-            ) : (
-              <span>{siteInfo.name}</span>
-            )}
+              </div>
+
+              <img
+                className="lg-none logo me-0"
+                src={linersWhite}
+                alt={siteInfo.name}
+              />
+            </>
           </Navbar.Brand>
 
           {/* mobile nav */}
           <div className="d-flex lg-none align-items-center flex-lg-nowrap">
             {user?.username ? (
-              <NavItems
-                redDot={redDot}
-                userInfo={user}
-                logOut={(e) => handleLogout(e)}
-              />
+              <>
+                <ConnectButton></ConnectButton>
+                <NavItems
+                  redDot={redDot}
+                  userInfo={user}
+                  logOut={(e) => handleLogout(e)}
+                />
+              </>
             ) : (
               <>
                 <Link
@@ -202,11 +230,8 @@ const Header: FC = () => {
 
         <Navbar.Collapse id="navBarContent" className="me-auto">
           <hr className="hr lg-none mb-3" style={{ marginTop: '12px' }} />
-          <Col lg={8} className="ps-0">
-            <Form
-              action="/search"
-              className="w-100 maxw-400"
-              onSubmit={handleSearch}>
+          <Col lg={8} className="ps-0 d-lg-flex">
+            <Form action="/search" className="w-100" onSubmit={handleSearch}>
               <FormControl
                 type="search"
                 placeholder={t('header.search.placeholder')}
@@ -216,6 +241,17 @@ const Header: FC = () => {
                 onChange={(e) => handleInput(e.target.value)}
               />
             </Form>
+
+            <Nav.Item className="me-3 d-none d-lg-flex">
+              <Link
+                to={askUrl}
+                className={classnames('text-capitalize text-nowrap btn', {
+                  'btn-light': navbarStyle !== 'theme-light',
+                  'btn-primary': navbarStyle === 'theme-light',
+                })}>
+                {t('btns.add_question')}
+              </Link>
+            </Nav.Item>
           </Col>
 
           <Nav.Item className="lg-none mt-3 pb-1">
@@ -225,22 +261,14 @@ const Header: FC = () => {
               {t('btns.add_question')}
             </Link>
           </Nav.Item>
+
           {/* pc nav */}
           <Col
             lg={4}
             className="d-none d-lg-flex justify-content-start justify-content-sm-end">
             {user?.username ? (
               <Nav className="d-flex align-items-center flex-lg-nowrap">
-                <Nav.Item className="me-3">
-                  <Link
-                    to={askUrl}
-                    className={classnames('text-capitalize text-nowrap btn', {
-                      'btn-light': navbarStyle !== 'theme-light',
-                      'btn-primary': navbarStyle === 'theme-light',
-                    })}>
-                    {t('btns.add_question')}
-                  </Link>
-                </Nav.Item>
+                <ConnectButton></ConnectButton>
 
                 <NavItems
                   redDot={redDot}

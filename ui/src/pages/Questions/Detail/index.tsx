@@ -50,6 +50,7 @@ import {
 } from './components';
 
 import './index.scss';
+import DailyCheckInReward from '@/components/DailyCheckInReward';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -299,6 +300,8 @@ const Index = () => {
           )}
       </Col>
       <Col className="page-right-side mt-4 mt-xl-0">
+        <DailyCheckInReward />
+
         <CustomSidebar />
         {showInviteToAnswer ? (
           <InviteToAnswer
@@ -306,6 +309,7 @@ const Index = () => {
             readOnly={!canInvitePeople}
           />
         ) : null}
+
         <RelatedQuestions id={question?.id || ''} />
       </Col>
     </Row>
