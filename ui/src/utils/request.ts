@@ -36,7 +36,7 @@ const baseConfig = {
   //   ? process.env.REACT_APP_API_URL
   //   : process.env.REACT_APP_API_URL,
   timeout: 10000,
-  // withCredentials: true,
+  withCredentials: true,
 };
 
 interface ApiConfig extends AxiosRequestConfig {
