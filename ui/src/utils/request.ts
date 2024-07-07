@@ -31,13 +31,15 @@ import { floppyNavigation } from './floppyNavigation';
 import { isIgnoredPath, IGNORE_PATH_LIST } from './guard';
 
 const baseConfig = {
-  baseURL:
-    process.env.NODE_ENV === 'development'
-      ? process.env.REACT_APP_API_URL
-      : process.env.REACT_APP_API_URL,
+  baseURL: 'http://49.232.15.240:9081/',
+  // process.env.NODE_ENV === 'development'
+  //   ? process.env.REACT_APP_API_URL
+  //   : process.env.REACT_APP_API_URL,
   timeout: 10000,
   // withCredentials: true,
 };
+
+console.log('process.env.REACT_APP_API_URL', process.env.REACT_APP_API_URL);
 
 interface ApiConfig extends AxiosRequestConfig {
   // Configure whether to allow takeover of 404 errors
