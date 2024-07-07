@@ -132,7 +132,7 @@ const Header: FC = () => {
 
   return (
     <Navbar
-      style={{ background: '#131313', borderBottom: '0.5px solid#fff' }}
+      style={{ background: '#131313', borderBottom: '1px solid#fff' }}
       variant={navbarStyle === 'theme-colored' ? 'dark' : ''}
       expand="lg"
       className={classnames('sticky-top', navbarStyle)}

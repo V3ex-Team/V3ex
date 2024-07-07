@@ -30,6 +30,7 @@ import { useCaptchaPlugin } from '@/utils/pluginKit';
 import { tryNormalLogged } from '@/utils/guard';
 import { bookmark, postVote } from '@/services';
 import * as Types from '@/common/interface';
+import coin from '@/assets/images/coin.svg';
 
 interface Props {
   className?: string;
@@ -185,6 +186,15 @@ const Index: FC<Props> = ({ className, data, source }) => {
           <span style={{ paddingLeft: '10px' }}>{bookmarkState.count}</span>
         </Button>
       )}
+
+      <Button
+        variant="outline-secondary ms-3"
+        title={t('question_detail.question_bookmark')}
+        active={bookmarkState.state}
+        onClick={handleBookmark}>
+        <img src={coin} alt="" />
+        <span style={{ paddingLeft: '10px' }}>{bookmarkState.count}</span>
+      </Button>
     </div>
   );
 };

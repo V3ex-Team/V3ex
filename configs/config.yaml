@@ -35,6 +35,6 @@ service_config:
   upload_path: "/data/uploads"
 ui:
   public_url: '/'
-  api_url: '/'
+  # api_url: '/'
   base_url: ''
 
