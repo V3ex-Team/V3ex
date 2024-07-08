@@ -20,15 +20,15 @@
 package server
 
 import (
-	"html/template"
-	"io/fs"
-
 	brotli "github.com/anargu/gin-brotli"
 	"github.com/apache/incubator-answer/internal/base/middleware"
 	"github.com/apache/incubator-answer/internal/router"
 	"github.com/apache/incubator-answer/plugin"
 	"github.com/apache/incubator-answer/ui"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"html/template"
+	"io/fs"
 )
 
 // NewHTTPServer new http server.
@@ -51,6 +51,16 @@ func NewHTTPServer(debug bool,
 		gin.SetMode(gin.ReleaseMode)
 	}
 	r := gin.New()
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"},
+		AllowHeaders:     []string{"*"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowOriginFunc: func(origin string) bool {
+			return true
+		},
+	}))
 	r.Use(brotli.Brotli(brotli.DefaultCompression), middleware.ExtractAndSetAcceptLanguage, shortIDMiddleware.SetShortIDFlag())
 	r.GET("/healthz", func(ctx *gin.Context) { ctx.String(200, "OK") })
 
