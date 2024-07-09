@@ -31,7 +31,7 @@ import { floppyNavigation } from './floppyNavigation';
 import { isIgnoredPath, IGNORE_PATH_LIST } from './guard';
 
 const baseConfig = {
-  baseURL: 'http://18.183.123.54:9080/',
+  baseURL: 'http://52.197.202.119/:9080/',
   // process.env.NODE_ENV === 'development'
   //   ? process.env.REACT_APP_API_URL
   //   : process.env.REACT_APP_API_URL,
