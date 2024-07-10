@@ -8,4 +8,4 @@ src/types/
 scripts/
 src/plugins/**
 !src/plugins/builtin
-src
+
