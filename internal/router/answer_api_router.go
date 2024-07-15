@@ -55,6 +55,7 @@ type AnswerAPIRouter struct {
 	userPluginController    *controller.UserPluginController
 	reviewController        *controller.ReviewController
 	metaController          *controller.MetaController
+	v3exController          *controller.V3exController
 }
 
 func NewAnswerAPIRouter(
@@ -86,6 +87,7 @@ func NewAnswerAPIRouter(
 	userPluginController *controller.UserPluginController,
 	reviewController *controller.ReviewController,
 	metaController *controller.MetaController,
+	v3exController *controller.V3exController,
 ) *AnswerAPIRouter {
 	return &AnswerAPIRouter{
 		langController:          langController,
@@ -116,6 +118,7 @@ func NewAnswerAPIRouter(
 		userPluginController:    userPluginController,
 		reviewController:        reviewController,
 		metaController:          metaController,
+		v3exController:          v3exController,
 	}
 }
 
@@ -187,6 +190,18 @@ func (a *AnswerAPIRouter) RegisterUnAuthAnswerAPIRouter(r *gin.RouterGroup) {
 
 	// reaction
 	r.GET("/meta/reaction", a.metaController.GetReaction)
+}
+
+func (a *AnswerAPIRouter) RegisterAnswerV3exAPIRouter(r *gin.RouterGroup) {
+	// 交易相关
+	r.POST("/v3ex/tx/sign", a.v3exController.Sign)     // 交易签名
+	r.POST("/v3ex/tx/verify", a.v3exController.Verify) // 交易验证
+
+	// token 代币 相关
+	r.GET("/v3ex/tokens", a.v3exController.ListToken)     // 查询支持的 token 列表
+	r.POST("/v3ex/token", a.v3exController.AddToken)      // 添加 token
+	r.PUT("/v3ex/token", a.v3exController.UpdateToken)    // 更新 token
+	r.DELETE("/v3ex/token", a.v3exController.DeleteToken) // 删除 token
 }
 
 func (a *AnswerAPIRouter) RegisterAuthUserWithAnyStatusAnswerAPIRouter(r *gin.RouterGroup) {

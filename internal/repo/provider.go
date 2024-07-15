@@ -49,6 +49,7 @@ import (
 	"github.com/apache/incubator-answer/internal/repo/user"
 	"github.com/apache/incubator-answer/internal/repo/user_external_login"
 	"github.com/apache/incubator-answer/internal/repo/user_notification_config"
+	"github.com/apache/incubator-answer/internal/repo/v3ex"
 	"github.com/google/wire"
 )
 
@@ -100,4 +101,5 @@ var ProviderSetRepo = wire.NewSet(
 	limit.NewRateLimitRepo,
 	plugin_config.NewPluginUserConfigRepo,
 	review.NewReviewRepo,
+	v3ex.NewV3exRepo,
 )

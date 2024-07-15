@@ -99,6 +99,11 @@ func NewHTTPServer(debug bool,
 	adminauthV1.Use(authUserMiddleware.AdminAuth())
 	answerRouter.RegisterAnswerAdminAPIRouter(adminauthV1)
 
+	// v3ex router
+	v3exV1 := r.Group("/answer/api/v1")
+	authV1.Use(authUserMiddleware.MustAuthAndAccountAvailable())
+	answerRouter.RegisterAnswerAdminAPIRouter(v3exV1)
+
 	templateRouter.RegisterTemplateRouter(rootGroup, uiConf.BaseURL)
 
 	// plugin routes

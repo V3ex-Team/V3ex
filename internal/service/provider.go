@@ -60,6 +60,7 @@ import (
 	usercommon "github.com/apache/incubator-answer/internal/service/user_common"
 	"github.com/apache/incubator-answer/internal/service/user_external_login"
 	"github.com/apache/incubator-answer/internal/service/user_notification_config"
+	"github.com/apache/incubator-answer/internal/service/v3ex"
 	"github.com/google/wire"
 )
 
@@ -117,4 +118,5 @@ var ProviderSetService = wire.NewSet(
 	notice_queue.NewNewQuestionNotificationQueueService,
 	review.NewReviewService,
 	meta.NewMetaService,
+	v3ex.NewV3exService,
 )
