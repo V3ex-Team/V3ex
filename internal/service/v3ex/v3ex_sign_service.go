@@ -1,10 +1,14 @@
 package v3ex
 
 import (
+	"context"
 	"fmt"
+	"github.com/apache/incubator-answer/internal/schema"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/segmentfault/pacman/log"
 	"math/big"
+	"time"
 )
 
 const (
@@ -26,23 +30,34 @@ func NewV3exService(
 	}
 }
 
-func Sign() {
+func Sign(ctx context.Context, req schema.SignV3exReq) (err error) {
 	// 获取链 ID
-	chainId := uint64(1) // 假设在主网上操作
+	var (
+		chainId   = req.ChainId // 假设在主网上操作
+		newAmount = big.NewInt(req.Amount)
+		to        = common.HexToAddress(req.To)
+		date      = big.NewInt(0)
+	)
+	parse, err := time.Parse(time.DateTime, req.Date)
+	if err != nil {
+		log.Errorf("[v3ex] Sign parse date error: %v", err)
+		return err
+	}
+	date = big.NewInt(parse.Unix())
 
 	// 生成交易 ID
-	to := common.HexToAddress("0x1234567890123456789012345678901234567890")
-	date := big.NewInt(1618304400) // 2021年4月13日
+
+	// 2021年4月13日
 	transId := crypto.Keccak256Hash(
-		new(big.Int).SetUint64(chainId).Bytes(),
+		new(big.Int).SetInt64(chainId).Bytes(),
 		to.Bytes(),
 		date.Bytes(),
 	).Hex()
 
 	// 生成哈希值
-	newAmount := big.NewInt(100)
+
 	hash := crypto.Keccak256Hash(
-		new(big.Int).SetUint64(chainId).Bytes(),
+		new(big.Int).SetInt64(chainId).Bytes(),
 		[]byte("CHECKIN"),
 		common.HexToHash(transId).Bytes(),
 		newAmount.Bytes(),
@@ -60,4 +75,6 @@ func Sign() {
 	// 将签名结果拼接成完整的签名字符串
 	signature := "0x" + common.Bytes2Hex(signatureBytes[:64]) + common.Bytes2Hex([]byte{signatureBytes[64]})
 	fmt.Println("Signature:", signature)
+
+	return nil
 }
