@@ -194,14 +194,15 @@ func (a *AnswerAPIRouter) RegisterUnAuthAnswerAPIRouter(r *gin.RouterGroup) {
 
 func (a *AnswerAPIRouter) RegisterAnswerV3exAPIRouter(r *gin.RouterGroup) {
 	// 交易相关
-	r.POST("/v3ex/tx/sign", a.v3exController.Sign)     // 交易签名
-	r.POST("/v3ex/tx/verify", a.v3exController.Verify) // 交易验证
+	r.POST("/v3ex/checkin/sign", a.v3exController.CheckInSign) // 交易签名
+	r.POST("/v3ex/sign", a.v3exController.CheckInSign)         // 交易签名
+	//r.POST("/v3ex/tx/verify", a.v3exController.Verify) // 交易验证
 
 	// token 代币 相关
 	r.GET("/v3ex/tokens", a.v3exController.ListToken)     // 查询支持的 token 列表
-	r.POST("/v3ex/token", a.v3exController.AddToken)      // 添加 token
-	r.PUT("/v3ex/token", a.v3exController.UpdateToken)    // 更新 token
-	r.DELETE("/v3ex/token", a.v3exController.DeleteToken) // 删除 token
+	r.POST("/v3ex/token", a.v3exController.AddToken)      // 添加支持的 token
+	r.DELETE("/v3ex/token", a.v3exController.DeleteToken) // 删除支持的 token
+	r.PUT("/v3ex/token", a.v3exController.UpdateToken)    // 更新支持的 token
 }
 
 func (a *AnswerAPIRouter) RegisterAuthUserWithAnyStatusAnswerAPIRouter(r *gin.RouterGroup) {

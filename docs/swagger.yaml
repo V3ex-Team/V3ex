@@ -1,20 +1,3 @@
-# Licensed to the Apache Software Foundation (ASF) under one
-# or more contributor license agreements.  See the NOTICE file
-# distributed with this work for additional information
-# regarding copyright ownership.  The ASF licenses this file
-# to you under the Apache License, Version 2.0 (the
-# "License"); you may not use this file except in compliance
-# with the License.  You may obtain a copy of the License at
-#
-#   http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing,
-# software distributed under the License is distributed on an
-# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-# KIND, either express or implied.  See the License for the
-# specific language governing permissions and limitations
-# under the License.
-
 definitions:
   constant.NotificationChannelKey:
     enum:
@@ -442,6 +425,29 @@ definitions:
       name:
         type: string
     type: object
+  schema.ERC20Token:
+    properties:
+      address:
+        description: Address 代币合约的地址
+        type: string
+      decimals:
+        description: Decimals 代币的小数位数
+        type: integer
+      description:
+        description: Description 对代币的描述
+        type: string
+      id:
+        type: integer
+      logoURI:
+        description: LogoURI 代币的图标 URI
+        type: string
+      name:
+        description: Name 代币的名称
+        type: string
+      symbol:
+        description: Symbol 代币的简称
+        type: string
+    type: object
   schema.EditUserProfileReq:
     properties:
       email:
@@ -856,6 +862,13 @@ definitions:
         description: url title
         type: string
     type: object
+  schema.GetReactionByObjectIdResp:
+    properties:
+      reaction_summary:
+        items:
+          $ref: '#/definitions/schema.ReactionRespItem'
+        type: array
+    type: object
   schema.GetReportListPageResp:
     properties:
       answer_accepted:
@@ -1245,6 +1258,15 @@ definitions:
         description: vote type
         type: string
     type: object
+  schema.ListTokenReq:
+    type: object
+  schema.ListTokenResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/schema.ERC20Token'
+        type: array
+    type: object
   schema.LoadingAction:
     properties:
       state:
@@ -1537,21 +1559,20 @@ definitions:
     required:
     - id
     type: object
-  schema.ReactionItem:
+  schema.ReactionRespItem:
     properties:
       count:
+        description: Count is the number of users who reacted
         type: integer
+      emoji:
+        description: Emoji is the reaction emoji
+        type: string
       is_active:
+        description: IsActive is if current user has reacted
         type: boolean
       tooltip:
+        description: Tooltip is the user's name who reacted
         type: string
-    type: object
-  schema.ReactionResp:
-    properties:
-      reaction_summary:
-        additionalProperties:
-          $ref: '#/definitions/schema.ReactionItem'
-        type: object
     type: object
   schema.ReasonItem:
     properties:
@@ -1747,6 +1768,46 @@ definitions:
         type: string
     required:
     - user_id
+    type: object
+  schema.SignReq:
+    properties:
+      data:
+        type: string
+    required:
+    - data
+    type: object
+  schema.SignResp:
+    properties:
+      r:
+        type: string
+      s:
+        type: string
+      v:
+        type: string
+    type: object
+  schema.SignV3exReq:
+    properties:
+      amount:
+        type: integer
+      chain_id:
+        type: integer
+      date:
+        type: string
+      method:
+        type: string
+      to:
+        type: string
+    required:
+    - amount
+    - chain_id
+    - date
+    - method
+    - to
+    type: object
+  schema.SignV3exResp:
+    properties:
+      sign_hash:
+        type: string
     type: object
   schema.SiteBrandingReq:
     properties:
@@ -4496,7 +4557,7 @@ paths:
             - $ref: '#/definitions/handler.RespBody'
             - properties:
                 data:
-                  $ref: '#/definitions/schema.ReactionResp'
+                  $ref: '#/definitions/schema.GetReactionByObjectIdResp'
               type: object
       security:
       - ApiKeyAuth: []
@@ -6613,6 +6674,163 @@ paths:
       summary: get user staff
       tags:
       - User
+  /answer/api/v1/v3ex/checkin/sign:
+    post:
+      consumes:
+      - application/json
+      description: sign v3ex checkin data
+      parameters:
+      - description: SignV3exReq
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SignV3exReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.RespBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.SignV3exResp'
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: sign v3ex checkin data
+      tags:
+      - V3ex
+  /answer/api/v1/v3ex/sign:
+    post:
+      consumes:
+      - application/json
+      description: sign v3ex data
+      parameters:
+      - description: SignReq
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.SignReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.RespBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.SignResp'
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: sign v3ex data
+      tags:
+      - V3ex
+  /answer/api/v1/v3ex/token:
+    delete:
+      consumes:
+      - application/json
+      description: delete v3ex support erc20 token
+      parameters:
+      - description: ERC20Token
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.ERC20Token'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.RespBody'
+      security:
+      - ApiKeyAuth: []
+      summary: delete v3ex support erc20 token
+      tags:
+      - V3ex
+    post:
+      consumes:
+      - application/json
+      description: add v3ex support erc20 token
+      parameters:
+      - description: ERC20Token
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.ERC20Token'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.RespBody'
+      security:
+      - ApiKeyAuth: []
+      summary: add v3ex support erc20 token
+      tags:
+      - V3ex
+    put:
+      consumes:
+      - application/json
+      description: update v3ex support erc20 token
+      parameters:
+      - description: ERC20Token
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.ERC20Token'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.RespBody'
+      security:
+      - ApiKeyAuth: []
+      summary: update v3ex support erc20 token
+      tags:
+      - V3ex
+  /answer/api/v1/v3ex/tokens:
+    get:
+      consumes:
+      - application/json
+      description: list v3ex support erc20 token
+      parameters:
+      - description: ListTokenReq
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.ListTokenReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/handler.RespBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.ListTokenResp'
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: list v3ex support erc20 token
+      tags:
+      - V3ex
   /answer/api/v1/vote/down:
     post:
       consumes:

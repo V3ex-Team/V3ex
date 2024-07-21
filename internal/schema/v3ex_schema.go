@@ -5,6 +5,7 @@ type SignV3exReq struct {
 	To      string `json:"to" form:"to" binding:"required"`
 	Date    string `json:"date" form:"date" binding:"required"`
 	Amount  int64  `json:"amount" form:"amount" binding:"required"`
+	Method  string `json:"method" form:"method" binding:"required"`
 }
 
 type SignV3exResp struct {
@@ -12,14 +13,24 @@ type SignV3exResp struct {
 }
 
 type (
+	SignReq struct {
+		Data string `json:"data,omitempty" form:"data" binding:"required"`
+	}
+	SignResp struct {
+		R string `json:"r,omitempty"`
+		S string `json:"s,omitempty"`
+		V string `json:"v,omitempty"`
+	}
+)
+
+type (
 	ListTokenReq struct {
 	}
-
 	ListTokenResp struct {
 		List []*ERC20Token `json:"list,omitempty"`
 	}
-
 	ERC20Token struct {
+		ID int64 `json:"id,omitempty"`
 		// Name 代币的名称
 		Name string `json:"name,omitempty"`
 		// Symbol 代币的简称

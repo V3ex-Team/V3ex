@@ -102,7 +102,7 @@ func NewHTTPServer(debug bool,
 	// v3ex router
 	v3exV1 := r.Group("/answer/api/v1")
 	authV1.Use(authUserMiddleware.MustAuthAndAccountAvailable())
-	answerRouter.RegisterAnswerAdminAPIRouter(v3exV1)
+	answerRouter.RegisterAnswerV3exAPIRouter(v3exV1)
 
 	templateRouter.RegisterTemplateRouter(rootGroup, uiConf.BaseURL)
 

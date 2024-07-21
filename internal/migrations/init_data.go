@@ -69,6 +69,7 @@ var (
 		&entity.UserNotificationConfig{},
 		&entity.PluginUserConfig{},
 		&entity.Review{},
+		&entity.ERC20Token{},
 	}
 
 	roles = []*entity.Role{
