@@ -44,6 +44,7 @@ import (
 	"github.com/apache/incubator-answer/internal/repo/user"
 	"github.com/apache/incubator-answer/internal/repo/user_external_login"
 	"github.com/apache/incubator-answer/internal/repo/user_notification_config"
+	"github.com/apache/incubator-answer/internal/repo/v3ex"
 	"github.com/apache/incubator-answer/internal/router"
 	"github.com/apache/incubator-answer/internal/service/action"
 	activity2 "github.com/apache/incubator-answer/internal/service/activity"
@@ -86,6 +87,7 @@ import (
 	"github.com/apache/incubator-answer/internal/service/user_common"
 	user_external_login2 "github.com/apache/incubator-answer/internal/service/user_external_login"
 	user_notification_config2 "github.com/apache/incubator-answer/internal/service/user_notification_config"
+	v3ex2 "github.com/apache/incubator-answer/internal/service/v3ex"
 	"github.com/segmentfault/pacman"
 	"github.com/segmentfault/pacman/log"
 )
@@ -233,7 +235,9 @@ func initApplication(debug bool, serverConf *conf.Server, dbConf *data.Database,
 	reviewController := controller.NewReviewController(reviewService, rankService, captchaService)
 	metaService := meta2.NewMetaService(metaCommonService, userCommon, answerRepo, questionRepo)
 	metaController := controller.NewMetaController(metaService)
-	v3exController := controller.NewV3exController()
+	v3exRepo := v3ex.NewV3exRepo(dataData)
+	v3exService := v3ex2.NewV3exService(v3exRepo)
+	v3exController := controller.NewV3exController(v3exService)
 	answerAPIRouter := router.NewAnswerAPIRouter(langController, userController, commentController, reportController, voteController, tagController, followController, collectionController, questionController, answerController, searchController, revisionController, rankController, userAdminController, reasonController, themeController, siteInfoController, controllerSiteInfoController, notificationController, dashboardController, uploadController, activityController, roleController, pluginController, permissionController, userPluginController, reviewController, metaController, v3exController)
 	swaggerRouter := router.NewSwaggerRouter(swaggerConf)
 	uiRouter := router.NewUIRouter(controllerSiteInfoController, siteInfoCommonService)
