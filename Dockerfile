@@ -15,7 +15,7 @@
 # specific language governing permissions and limitations
 # under the License.
 
-FROM golang:1.21-alpine AS golang-builder
+FROM golang:1.19-alpine AS golang-builder
 LABEL maintainer="aichy@sf.com"
 
 ARG GOPROXY

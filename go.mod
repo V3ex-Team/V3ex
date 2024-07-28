@@ -17,9 +17,7 @@
 
 module github.com/apache/incubator-answer
 
-go 1.21
-
-toolchain go1.22.4
+go 1.18
 
 require (
 	github.com/Chain-Zhang/pinyin v0.1.3
