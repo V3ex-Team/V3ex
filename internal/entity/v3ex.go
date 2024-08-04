@@ -13,13 +13,13 @@ type ERC20Token struct {
 	// Decimals 代币的小数位数
 	Decimals int `json:"decimals,omitempty" xomr:"not null INT(11) decimals"`
 	// LogoURI 代币的图标 URI
-	LogoURI string `json:"logoURI,omitempty" xorm:"VARCHAR(255) logo_uri"`
+	LogoURI string `json:"logo_uri,omitempty" xorm:"VARCHAR(255) logo_uri"`
 	// Description 对代币的描述
 	Description string `json:"description,omitempty" xorm:"VARCHAR(255) description"`
 	// UpdatedAt 更新时间
-	CreatedAt time.Time `xorm:"created TIMESTAMP created_at"`
+	CreatedAt time.Time `xorm:"created_at TIMESTAMP created_at"`
 	// CreatedAt 创建时间
-	UpdatedAt time.Time `xorm:"updated TIMESTAMP updated_at"`
+	UpdatedAt time.Time `xorm:"updated_at TIMESTAMP updated_at"`
 }
 
 // TableName user role rel table name
